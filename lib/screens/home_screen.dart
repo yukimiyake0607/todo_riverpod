@@ -6,6 +6,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'TODOリスト',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+      ),
       body: Center(
         child: Text(
           'home_screen',

@@ -11,6 +11,11 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blue,
         brightness: Brightness.light,
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }
