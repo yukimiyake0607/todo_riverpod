@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_riverpod/models/todo_model.dart';
+import 'package:todo_riverpod/providers/todo_provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todos = ref.watch(todoListProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -18,28 +22,24 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Checkbox(value: false, onChanged: null),
-                    Text(
-                      'パン',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-                Divider(),
-              ],
+      body: todos.isEmpty
+          ? const Center(
+              child: Text('no todo'),
+            )
+          : ListView.builder(
+              itemCount: todos.length,
+              itemBuilder: (context, index) {
+                final todo = todos[index];
+                return ListTile(
+                  leading: Checkbox(
+                    value: todo.isChecked,
+                    onChanged: (value) {},
+                  ),
+                  title: Text(todo.title),
+                  subtitle: Text(todo.description),
+                );
+              },
             ),
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: const Icon(
