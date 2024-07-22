@@ -5,8 +5,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('home_screen'),
+    return Scaffold(
+      body: Center(
+        child: Text(
+          'home_screen',
+          style: Theme.of(context).textTheme.displaySmall,
+        ),
+      ),
     );
   }
 }
