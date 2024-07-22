@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:todo_riverpod/models/todo_model.dart';
 import 'package:todo_riverpod/providers/todo_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -33,7 +32,7 @@ class HomeScreen extends ConsumerWidget {
                 return ListTile(
                   leading: Checkbox(
                     value: todo.isChecked,
-                    onChanged: (value) {},
+                    onChanged: (_) {},
                   ),
                   title: Text(todo.title),
                   subtitle: Text(todo.description),
