@@ -1,3 +1,7 @@
 # todo_riverpod
 
-A new Flutter project.
+・TODO一覧を表示できる
+・TODOはタイトル、説明、完了の有無、締め切り日時、更新日時を保持
+・TODO一覧は締め切り日時の降順、昇順を並び替えられる
+・TODOを追加できる
+・TODOの完了、未完了を更新できる
