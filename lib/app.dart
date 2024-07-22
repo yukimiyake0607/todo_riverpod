@@ -15,6 +15,13 @@ class MainApp extends StatelessWidget {
           titleLarge: TextStyle(
             fontWeight: FontWeight.bold,
           ),
+          bodyLarge: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.lightBlueAccent,
+          shape: CircleBorder(),
         ),
       ),
     );
