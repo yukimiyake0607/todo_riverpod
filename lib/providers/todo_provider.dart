@@ -16,14 +16,14 @@ class TodoList extends _$TodoList {
     state = [...state, newTodo];
   }
 
-  void removeTodo() {}
+  void removeTodo(String id) {
+    state = state.where((todo) => todo.id != id).toList();
+  }
 
   void toggleTodo(String id) {
     state = [
-      for(final todo in state) 
-        if(todo.id == id) 
-          todo.copyWith(isChecked: !todo.isChecked)
-        else todo,
+      for (final todo in state)
+        if (todo.id == id) todo.copyWith(isChecked: !todo.isChecked) else todo,
     ];
   }
 }
