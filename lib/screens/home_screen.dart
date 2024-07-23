@@ -50,6 +50,12 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   title: Text(todo.title),
                   subtitle: Text(todo.description),
+                  trailing: ElevatedButton(
+                    onPressed: () {
+                      ref.read(todoListProvider.notifier).removeTodo(todo.id);
+                    },
+                    child: const Text('削除'),
+                  ),
                 );
               },
             ),
