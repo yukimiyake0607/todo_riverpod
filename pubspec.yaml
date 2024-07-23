@@ -12,6 +12,7 @@ dependencies:
   flutter_riverpod: ^2.5.1
   freezed_annotation: ^2.4.4
   riverpod_annotation: ^2.3.5
+  uuid: ^4.4.2
 
 dev_dependencies:
   flutter_test:
