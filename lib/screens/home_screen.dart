@@ -56,6 +56,7 @@ class HomeScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
+            isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
               return AddTodo();
@@ -79,18 +80,24 @@ class AddTodo extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
-      child: Container(
-        height: 500,
+      child: SizedBox(
+        height: 600.0,
         width: double.infinity,
         child: Column(
           children: [
             TextField(
               controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
+              decoration: const InputDecoration(
+                labelText: 'TODO',
+                labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
+              ),
             ),
             TextField(
               controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Description'),
+              decoration: const InputDecoration(
+                labelText: '内容',
+                labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -103,7 +110,7 @@ class AddTodo extends ConsumerWidget {
                   Navigator.pop(context);
                 }
               },
-              child: const Text('Submit'),
+              child: const Text('追加'),
             ),
           ],
         ),
