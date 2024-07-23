@@ -40,10 +40,52 @@ class HomeScreen extends ConsumerWidget {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return AddTodo();
+            },
+          );
+        },
         child: const Icon(
           Icons.add,
           color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class AddTodo extends StatelessWidget {
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
+      child: Container(
+        height: 500,
+        width: double.infinity,
+        child: Column(
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: const InputDecoration(labelText: 'Title'),
+            ),
+            TextField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(labelText: 'Description'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Submit'),
+            ),
+          ],
         ),
       ),
     );
