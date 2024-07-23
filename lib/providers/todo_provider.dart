@@ -10,7 +10,7 @@ class TodoList extends _$TodoList {
     return [];
   }
 
-  void addTodo(String id, String title, String description) {
+  void addTodo(String title, String description) {
     final newTodo = TodoModel(id: const Uuid().v4(), title: title, description: description);
     state = [...state, newTodo];
   }

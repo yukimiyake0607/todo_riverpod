@@ -57,12 +57,12 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class AddTodo extends StatelessWidget {
+class AddTodo extends ConsumerWidget {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
       child: Container(
@@ -82,7 +82,13 @@ class AddTodo extends StatelessWidget {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (_titleController.text.isNotEmpty) {
+                  ref.read(todoListProvider.notifier).addTodo(
+                      _titleController.text, _descriptionController.text);
+                  Navigator.pop(context);
+                }
+              },
               child: const Text('Submit'),
             ),
           ],
