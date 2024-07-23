@@ -11,11 +11,19 @@ class TodoList extends _$TodoList {
   }
 
   void addTodo(String title, String description) {
-    final newTodo = TodoModel(id: const Uuid().v4(), title: title, description: description);
+    final newTodo = TodoModel(
+        id: const Uuid().v4(), title: title, description: description);
     state = [...state, newTodo];
   }
 
   void removeTodo() {}
 
-  void toggleTodo() {}
+  void toggleTodo(String id) {
+    state = [
+      for(final todo in state) 
+        if(todo.id == id) 
+          todo.copyWith(isChecked: !todo.isChecked)
+        else todo,
+    ];
+  }
 }

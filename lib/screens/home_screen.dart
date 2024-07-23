@@ -32,7 +32,9 @@ class HomeScreen extends ConsumerWidget {
                 return ListTile(
                   leading: Checkbox(
                     value: todo.isChecked,
-                    onChanged: (_) {},
+                    onChanged: (_) {
+                      ref.read(todoListProvider.notifier).toggleTodo(todo.id);
+                    },
                   ),
                   title: Text(todo.title),
                   subtitle: Text(todo.description),
