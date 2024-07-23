@@ -22,8 +22,20 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
       body: todos.isEmpty
-          ? const Center(
-              child: Text('no todo'),
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/task_completed.png'),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    '現在タスクはありません',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              ),
             )
           : ListView.builder(
               itemCount: todos.length,
