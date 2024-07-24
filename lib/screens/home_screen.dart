@@ -147,8 +147,8 @@ class AddTodo extends ConsumerWidget {
 }
 
 class EditTodo extends ConsumerWidget {
-  final _titleController = TextEditingController();
-  final _descriptionController = TextEditingController();
+  late final _newTitleController = TextEditingController(text: todo.title);
+  late final _newDescriptionController = TextEditingController(text: todo.description);
   final TodoModel todo;
 
   EditTodo({required this.todo});
@@ -163,14 +163,14 @@ class EditTodo extends ConsumerWidget {
         child: Column(
           children: [
             TextField(
-              controller: _titleController,
+              controller: _newTitleController,
               decoration: const InputDecoration(
                 labelText: 'TODO',
                 labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
               ),
             ),
             TextField(
-              controller: _descriptionController,
+              controller: _newDescriptionController,
               decoration: const InputDecoration(
                 labelText: '内容',
                 labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
@@ -181,8 +181,8 @@ class EditTodo extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                if (_titleController.text.isNotEmpty) {
-                  ref.read(todoListProvider.notifier).editTodo(todo.id, _titleController.text, _descriptionController.text);
+                if (_newTitleController.text.isNotEmpty) {
+                  ref.read(todoListProvider.notifier).editTodo(todo.id, _newTitleController.text, _newDescriptionController.text);
                   Navigator.pop(context);
                 }
               },
