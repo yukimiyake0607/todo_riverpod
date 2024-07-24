@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:todo_riverpod/models/todo_model.dart';
 import 'package:todo_riverpod/providers/todo_provider.dart';
 
