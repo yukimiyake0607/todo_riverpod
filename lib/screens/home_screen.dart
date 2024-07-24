@@ -50,11 +50,30 @@ class HomeScreen extends ConsumerWidget {
                   ),
                   title: Text(todo.title),
                   subtitle: Text(todo.description),
-                  trailing: ElevatedButton(
-                    onPressed: () {
-                      ref.read(todoListProvider.notifier).removeTodo(todo.id);
-                    },
-                    child: const Text('削除'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return EditTodo();
+                            },
+                          );
+                        },
+                        child: const Text('編集'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          ref
+                              .read(todoListProvider.notifier)
+                              .removeTodo(todo.id);
+                        },
+                        child: const Text('削除'),
+                      ),
+                    ],
                   ),
                 );
               },
