@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:todo_riverpod/models/todo_model.dart';
 import 'package:todo_riverpod/providers/todo_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -59,7 +61,7 @@ class HomeScreen extends ConsumerWidget {
                             isScrollControlled: true,
                             context: context,
                             builder: (BuildContext context) {
-                              return EditTodo();
+                              return EditTodo(todo: todo);
                             },
                           );
                         },
@@ -136,6 +138,55 @@ class AddTodo extends ConsumerWidget {
                 }
               },
               child: const Text('追加'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class EditTodo extends ConsumerWidget {
+  final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final TodoModel todo;
+
+  EditTodo({required this.todo});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20.0),
+      child: SizedBox(
+        height: 600.0,
+        width: double.infinity,
+        child: Column(
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: 'TODO',
+                labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
+              ),
+            ),
+            TextField(
+              controller: _descriptionController,
+              decoration: const InputDecoration(
+                labelText: '内容',
+                labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_titleController.text.isNotEmpty) {
+                  ref.read(todoListProvider.notifier).editTodo(todo.id, _titleController.text, _descriptionController.text);
+                  Navigator.pop(context);
+                }
+              },
+              child: const Text('編集'),
             ),
           ],
         ),

@@ -20,6 +20,15 @@ class TodoList extends _$TodoList {
     state = state.where((todo) => todo.id != id).toList();
   }
 
+  void editTodo(String id, String newTitle, String newDescription) {
+    state = [
+      for(final todo in state)
+        if(todo.id == id)
+          todo.copyWith(title: newTitle, description: newDescription)
+        else todo
+    ];
+  }
+
   void toggleTodo(String id) {
     state = [
       for (final todo in state)
