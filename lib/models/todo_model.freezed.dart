@@ -14,13 +14,22 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+TodoModel _$TodoModelFromJson(Map<String, dynamic> json) {
+  return _TodoModel.fromJson(json);
+}
+
 /// @nodoc
 mixin _$TodoModel {
+  @HiveField(0)
   String get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get title => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get description => throw _privateConstructorUsedError;
+  @HiveField(3)
   bool get isChecked => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $TodoModelCopyWith<TodoModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -31,7 +40,11 @@ abstract class $TodoModelCopyWith<$Res> {
   factory $TodoModelCopyWith(TodoModel value, $Res Function(TodoModel) then) =
       _$TodoModelCopyWithImpl<$Res, TodoModel>;
   @useResult
-  $Res call({String id, String title, String description, bool isChecked});
+  $Res call(
+      {@HiveField(0) String id,
+      @HiveField(1) String title,
+      @HiveField(2) String description,
+      @HiveField(3) bool isChecked});
 }
 
 /// @nodoc
@@ -81,7 +94,11 @@ abstract class _$$TodoModelImplCopyWith<$Res>
       __$$TodoModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String title, String description, bool isChecked});
+  $Res call(
+      {@HiveField(0) String id,
+      @HiveField(1) String title,
+      @HiveField(2) String description,
+      @HiveField(3) bool isChecked});
 }
 
 /// @nodoc
@@ -122,22 +139,29 @@ class __$$TodoModelImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$TodoModelImpl with DiagnosticableTreeMixin implements _TodoModel {
-  const _$TodoModelImpl(
-      {required this.id,
-      required this.title,
-      required this.description,
-      this.isChecked = false});
+  _$TodoModelImpl(
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.title,
+      @HiveField(2) required this.description,
+      @HiveField(3) this.isChecked = false});
+
+  factory _$TodoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TodoModelImplFromJson(json);
 
   @override
+  @HiveField(0)
   final String id;
   @override
+  @HiveField(1)
   final String title;
   @override
+  @HiveField(2)
   final String description;
   @override
   @JsonKey()
+  @HiveField(3)
   final bool isChecked;
 
   @override
@@ -169,6 +193,7 @@ class _$TodoModelImpl with DiagnosticableTreeMixin implements _TodoModel {
                 other.isChecked == isChecked));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode =>
       Object.hash(runtimeType, id, title, description, isChecked);
@@ -178,22 +203,36 @@ class _$TodoModelImpl with DiagnosticableTreeMixin implements _TodoModel {
   @pragma('vm:prefer-inline')
   _$$TodoModelImplCopyWith<_$TodoModelImpl> get copyWith =>
       __$$TodoModelImplCopyWithImpl<_$TodoModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TodoModelImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _TodoModel implements TodoModel {
-  const factory _TodoModel(
-      {required final String id,
-      required final String title,
-      required final String description,
-      final bool isChecked}) = _$TodoModelImpl;
+  factory _TodoModel(
+      {@HiveField(0) required final String id,
+      @HiveField(1) required final String title,
+      @HiveField(2) required final String description,
+      @HiveField(3) final bool isChecked}) = _$TodoModelImpl;
+
+  factory _TodoModel.fromJson(Map<String, dynamic> json) =
+      _$TodoModelImpl.fromJson;
 
   @override
+  @HiveField(0)
   String get id;
   @override
+  @HiveField(1)
   String get title;
   @override
+  @HiveField(2)
   String get description;
   @override
+  @HiveField(3)
   bool get isChecked;
   @override
   @JsonKey(ignore: true)
