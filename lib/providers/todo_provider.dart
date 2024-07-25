@@ -1,7 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_riverpod/models/todo_model.dart';
+import 'package:todo_riverpod/services/hive_todo_service.dart';
 import 'package:uuid/uuid.dart';
 part 'todo_provider.g.dart';
+
+@riverpod
+HiveTodoService hiveTodoService (HiveTodoServiceRef ref) {
+  return HiveTodoService();
+}
+
 
 @riverpod
 class TodoList extends _$TodoList {

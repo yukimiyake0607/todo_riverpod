@@ -6,6 +6,21 @@ part of 'todo_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$hiveTodoServiceHash() => r'055a5351ae1bd522870ce59ea60fce336af5804b';
+
+/// See also [hiveTodoService].
+@ProviderFor(hiveTodoService)
+final hiveTodoServiceProvider = AutoDisposeProvider<HiveTodoService>.internal(
+  hiveTodoService,
+  name: r'hiveTodoServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$hiveTodoServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef HiveTodoServiceRef = AutoDisposeProviderRef<HiveTodoService>;
 String _$todoListHash() => r'2cd2687a49b8f110e4087be008edf90ba14aa79e';
 
 /// See also [TodoList].
