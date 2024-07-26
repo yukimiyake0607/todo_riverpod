@@ -1,14 +1,18 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_riverpod/models/todo_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 class HiveTodoService {
   final String _boxName = 'todos';
 
-  Future<void> init() async {
+Future<void> init() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(TodoModelAdapter());
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(TodoModelAdapter());
+    }
     await Hive.openBox<TodoModel>(_boxName);
   }
+
 
   Future<void> addTodo(TodoModel todo) async {
     final box = Hive.box<TodoModel>(_boxName);

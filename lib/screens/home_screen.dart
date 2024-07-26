@@ -8,7 +8,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todos = ref.watch(todoListProvider);
+    final todosAsyncValue = ref.watch(todoListProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -22,63 +22,52 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
       ),
-      body: todos.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/task_completed.png'),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    '現在タスクはありません',
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
+      body: todosAsyncValue.when(
+          data: (todos) => ListView.builder(
+                itemCount: todos.length,
+                itemBuilder: (context, index) {
+                  final todo = todos[index];
+                  return ListTile(
+                    leading: Checkbox(
+                      value: todo.isChecked,
+                      onChanged: (_) {
+                        ref.read(todoListProvider.notifier).toggleTodo(todo);
+                      },
+                    ),
+                    title: Text(todo.title),
+                    subtitle: Text(todo.description),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return EditTodo(todo: todo);
+                              },
+                            );
+                          },
+                          child: const Text('編集'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            ref
+                                .read(todoListProvider.notifier)
+                                .removeTodo(todo.id);
+                          },
+                          child: const Text('削除'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            )
-          : ListView.builder(
-              itemCount: todos.length,
-              itemBuilder: (context, index) {
-                final todo = todos[index];
-                return ListTile(
-                  leading: Checkbox(
-                    value: todo.isChecked,
-                    onChanged: (_) {
-                      ref.read(todoListProvider.notifier).toggleTodo(todo.id);
-                    },
-                  ),
-                  title: Text(todo.title),
-                  subtitle: Text(todo.description),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (BuildContext context) {
-                              return EditTodo(todo: todo);
-                            },
-                          );
-                        },
-                        child: const Text('編集'),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          ref
-                              .read(todoListProvider.notifier)
-                              .removeTodo(todo.id);
-                        },
-                        child: const Text('削除'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+          error: (error, stack) => Center(
+                child: Text('Error: $error'),
+              ),
+          loading: () => Center(child: CircularProgressIndicator())),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -147,7 +136,8 @@ class AddTodo extends ConsumerWidget {
 
 class EditTodo extends ConsumerWidget {
   late final _newTitleController = TextEditingController(text: todo.title);
-  late final _newDescriptionController = TextEditingController(text: todo.description);
+  late final _newDescriptionController =
+      TextEditingController(text: todo.description);
   final TodoModel todo;
 
   EditTodo({required this.todo});
@@ -181,7 +171,8 @@ class EditTodo extends ConsumerWidget {
             ElevatedButton(
               onPressed: () {
                 if (_newTitleController.text.isNotEmpty) {
-                  ref.read(todoListProvider.notifier).editTodo(todo.id, _newTitleController.text, _newDescriptionController.text);
+                  ref.read(todoListProvider.notifier).editTodo(todo.id,
+                      _newTitleController.text, _newDescriptionController.text);
                   Navigator.pop(context);
                 }
               },
