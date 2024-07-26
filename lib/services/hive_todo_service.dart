@@ -5,6 +5,7 @@ class HiveTodoService {
   final String _boxName = 'todos';
 
   Future<void> init() async {
+    await Hive.initFlutter();
     Hive.registerAdapter(TodoModelAdapter());
     await Hive.openBox<TodoModel>(_boxName);
   }
