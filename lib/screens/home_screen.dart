@@ -102,6 +102,7 @@ class AddTodo extends ConsumerWidget {
           children: [
             TextField(
               controller: _titleController,
+              cursorColor: Colors.lightBlueAccent,
               decoration: const InputDecoration(
                 labelText: 'TODO',
                 labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
@@ -115,6 +116,7 @@ class AddTodo extends ConsumerWidget {
             ),
             TextField(
               controller: _descriptionController,
+              cursorColor: Colors.lightBlueAccent,
               decoration: const InputDecoration(
                 labelText: '内容',
                 labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
