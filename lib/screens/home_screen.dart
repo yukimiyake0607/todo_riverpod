@@ -105,6 +105,12 @@ class AddTodo extends ConsumerWidget {
               decoration: const InputDecoration(
                 labelText: 'TODO',
                 labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.lightBlueAccent,
+                    width: 2,
+                  ),
+                ),
               ),
             ),
             TextField(
@@ -112,12 +118,21 @@ class AddTodo extends ConsumerWidget {
               decoration: const InputDecoration(
                 labelText: '内容',
                 labelStyle: TextStyle(color: Colors.grey, fontSize: 16.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.lightBlueAccent,
+                    width: 2,
+                  ),
+                ),
               ),
             ),
             const SizedBox(
               height: 20,
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlueAccent,
+              ),
               onPressed: () {
                 if (_titleController.text.isNotEmpty) {
                   ref.read(todoListProvider.notifier).addTodo(
@@ -125,7 +140,11 @@ class AddTodo extends ConsumerWidget {
                   Navigator.pop(context);
                 }
               },
-              child: const Text('追加'),
+              child: const Text(
+                '追加',
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
