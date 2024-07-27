@@ -15,5 +15,6 @@
 
 This app uses icons from [Icon8](https://icons8.com).
 
-https://github.com/user-attachments/assets/c0e4dfbe-6715-48fe-b167-d1abbf4d9443
+https://github.com/user-attachments/assets/8dd33cfc-f332-491b-9f2e-b349ceb1d11a
+
 
