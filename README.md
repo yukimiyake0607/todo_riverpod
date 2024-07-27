@@ -13,6 +13,7 @@
 ・状態管理はRiverpodを使用
 
 
+This app uses icons from [Icon8](https://icons8.com).
 
 https://github.com/user-attachments/assets/c0e4dfbe-6715-48fe-b167-d1abbf4d9443
 

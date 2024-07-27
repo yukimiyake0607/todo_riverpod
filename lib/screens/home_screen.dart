@@ -39,7 +39,8 @@ class HomeScreen extends ConsumerWidget {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ElevatedButton(
+                        IconButton(
+                          icon: Image.asset('assets/icon_edit.png'),
                           onPressed: () {
                             showModalBottomSheet(
                               isScrollControlled: true,
@@ -49,15 +50,14 @@ class HomeScreen extends ConsumerWidget {
                               },
                             );
                           },
-                          child: const Text('編集'),
                         ),
-                        ElevatedButton(
+                        IconButton(
+                          icon: Image.asset('assets/icon_trash.png'),
                           onPressed: () {
                             ref
                                 .read(todoListProvider.notifier)
                                 .removeTodo(todo.id);
                           },
-                          child: const Text('削除'),
                         ),
                       ],
                     ),

@@ -1,6 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_riverpod/models/todo_model.dart';
-import 'package:path_provider/path_provider.dart';
 
 class HiveTodoService {
   final String _boxName = 'todos';
