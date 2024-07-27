@@ -12,7 +12,8 @@
 
 ポイント<br>
 ・Freezedで不変クラスを作成<br>
-・状態管理はRiverpodを使用
+・状態管理はRiverpodを使用<br>
+・ローカル保存はHiveパッケージを使用
 
 
 This app uses icons from [Icon8](https://icons8.com).
