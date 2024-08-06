@@ -36,39 +36,55 @@ class HomeScreen extends ConsumerWidget {
                 itemCount: todos.length,
                 itemBuilder: (context, index) {
                   final todo = todos[index];
-                  return ListTile(
-                    leading: Checkbox(
-                      value: todo.isChecked,
-                      onChanged: (_) {
-                        ref.read(todoListProvider.notifier).toggleTodo(todo);
-                      },
+                  return Dismissible(
+                    key: Key(todo.id),
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: 20),
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
                     ),
-                    title: Text(todo.title),
-                    subtitle: Text(todo.description),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Image.asset('assets/icon_edit.png'),
-                          onPressed: () {
-                            showModalBottomSheet(
-                              isScrollControlled: true,
-                              context: context,
-                              builder: (BuildContext context) {
-                                return EditTodo(todo: todo);
-                              },
-                            );
-                          },
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) {
+                      ref.read(todoListProvider.notifier).removeTodo(todo.id);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('${todo.title}を削除しました'),
+                          action: SnackBarAction(
+                            label: '元に戻す',
+                            onPressed: () {
+                              ref
+                                  .read(todoListProvider.notifier)
+                                  .addTodo(todo.title, todo.description);
+                            },
+                          ),
                         ),
-                        IconButton(
-                          icon: Image.asset('assets/icon_trash.png'),
-                          onPressed: () {
-                            ref
-                                .read(todoListProvider.notifier)
-                                .removeTodo(todo.id);
-                          },
-                        ),
-                      ],
+                      );
+                    },
+                    child: ListTile(
+                      leading: Checkbox(
+                        value: todo.isChecked,
+                        onChanged: (_) {
+                          ref.read(todoListProvider.notifier).toggleTodo(todo);
+                        },
+                      ),
+                      title: Text(todo.title),
+                      subtitle: Text(todo.description),
+                      trailing: IconButton(
+                        icon: Image.asset('assets/icon_edit.png'),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            isScrollControlled: true,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return EditTodo(todo: todo);
+                            },
+                          );
+                        },
+                      ),
                     ),
                   );
                 },
