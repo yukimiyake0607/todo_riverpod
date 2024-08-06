@@ -15,24 +15,36 @@ class TodoState {
   final List<TodoModel> completedTodos;
 
   TodoState({required this.uncompletedTodos, required this.completedTodos});
+
+  List<TodoModel> get allTodos => [...uncompletedTodos, ...completedTodos];
 }
 
 @riverpod
 class TodoList extends _$TodoList {
   late HiveTodoService _todoService;
+  late TodoState _todoState;
 
   @override
   FutureOr<List<TodoModel>> build() async {
     _todoService = ref.watch(hiveTodoServiceProvider);
     await _todoService.init();
-    return _todoService.getTodos();
+    final allTodos = await _todoService.getTodos();
+    _todoState = TodoState(
+      uncompletedTodos: allTodos.where((todo) => !todo.isChecked).toList(),
+      completedTodos: allTodos.where((todo) => todo.isChecked).toList(),
+    );
+    return _todoState.allTodos;
   }
 
   Future<void> addTodo(String title, String description) async {
     final newTodo = TodoModel(
         id: const Uuid().v4(), title: title, description: description);
     await _todoService.addTodo(newTodo);
-    state = AsyncValue.data([...state.value!, newTodo]);
+    _todoState = TodoState(
+      uncompletedTodos: [..._todoState.uncompletedTodos],
+      completedTodos: _todoState.completedTodos,
+    );
+    state = AsyncValue.data(_todoState.allTodos);
   }
 
   Future<void> removeTodo(String id) async {
