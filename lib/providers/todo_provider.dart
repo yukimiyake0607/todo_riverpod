@@ -10,6 +10,13 @@ HiveTodoService hiveTodoService(HiveTodoServiceRef ref) {
   return HiveTodoService();
 }
 
+class TodoState {
+  final List<TodoModel> uncompletedTodos;
+  final List<TodoModel> completedTodos;
+
+  TodoState({required this.uncompletedTodos, required this.completedTodos});
+}
+
 @riverpod
 class TodoList extends _$TodoList {
   late HiveTodoService _todoService;
