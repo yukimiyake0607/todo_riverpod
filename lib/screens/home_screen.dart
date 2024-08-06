@@ -23,7 +23,16 @@ class HomeScreen extends ConsumerWidget {
         ),
       ),
       body: todosAsyncValue.when(
-          data: (todos) => ListView.builder(
+          data: (todos) {
+            if (todos.isEmpty) {
+              return Center(
+                child: Text(
+                  'TODOがありません',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              );
+            } else {
+              return ListView.builder(
                 itemCount: todos.length,
                 itemBuilder: (context, index) {
                   final todo = todos[index];
@@ -63,7 +72,9 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   );
                 },
-              ),
+              );
+            }
+          },
           error: (error, stack) => Center(
                 child: Text('Error: $error'),
               ),
