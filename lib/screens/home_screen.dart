@@ -18,14 +18,12 @@ class _TodoAppState extends ConsumerState<HomeScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _tabController.dispose();
     super.dispose();
   }
@@ -37,7 +35,7 @@ class _TodoAppState extends ConsumerState<HomeScreen>
         title: const Text('TODOリスト'),
         bottom: TabBar(
           controller: _tabController,
-          tabs: [
+          tabs: const [
             Tab(text: '未完了'),
             Tab(text: '完了'),
           ],
@@ -45,7 +43,7 @@ class _TodoAppState extends ConsumerState<HomeScreen>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [
+        children: const [
           UncompletedTodoScreen(),
           CompletedTodoScreen(),
         ],
@@ -73,6 +71,8 @@ class _TodoAppState extends ConsumerState<HomeScreen>
 class AddTodo extends ConsumerWidget {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  AddTodo({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -144,7 +144,7 @@ class EditTodo extends ConsumerWidget {
       TextEditingController(text: todo.description);
   final TodoModel todo;
 
-  EditTodo({required this.todo});
+EditTodo({super.key, required this.todo});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

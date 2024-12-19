@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:todo_riverpod/models/todo_model.dart';
 import 'package:todo_riverpod/services/hive_todo_service.dart';
@@ -28,7 +27,7 @@ class TodoList extends _$TodoList {
   FutureOr<List<TodoModel>> build() async {
     _todoService = ref.watch(hiveTodoServiceProvider);
     await _todoService.init();
-    final allTodos = await _todoService.getTodos();
+    final allTodos = _todoService.getTodos();
     _todoState = TodoState(
       uncompletedTodos: allTodos.where((todo) => !todo.isChecked).toList(),
       completedTodos: allTodos.where((todo) => todo.isChecked).toList(),
@@ -41,7 +40,7 @@ class TodoList extends _$TodoList {
         id: const Uuid().v4(), title: title, description: description);
     await _todoService.addTodo(newTodo);
     _todoState = TodoState(
-      uncompletedTodos: [..._todoState.uncompletedTodos],
+      uncompletedTodos: [..._todoState.uncompletedTodos, newTodo],
       completedTodos: _todoState.completedTodos,
     );
     state = AsyncValue.data(_todoState.allTodos);
@@ -49,22 +48,32 @@ class TodoList extends _$TodoList {
 
   Future<void> removeTodo(String id) async {
     await _todoService.deleteTodo(id);
-    state =
-        AsyncValue.data(state.value!.where((todo) => todo.id != id).toList());
+    _todoState = TodoState(
+      uncompletedTodos:
+          _todoState.uncompletedTodos.where((todo) => todo.id != id).toList(),
+      completedTodos:
+          _todoState.completedTodos.where((todo) => todo.id != id).toList(),
+    );
+    state = AsyncValue.data(_todoState.allTodos);
   }
 
+  
   Future<void> updateTodo(TodoModel todo) async {
     await _todoService.updateTodo(todo);
-    state = AsyncValue.data(
-        state.value!.map((t) => t.id == todo.id ? todo : t).toList());
+    _todoState = TodoState(
+      uncompletedTodos: _todoState.uncompletedTodos
+          .map((t) => t.id == todo.id ? todo : t)
+          .toList(),
+      completedTodos: _todoState.completedTodos
+          .map((t) => t.id == todo.id ? todo : t)
+          .toList(),
+    );
+    state = AsyncValue.data(_todoState.allTodos);
   }
 
   Future<void> editTodo(
       String id, String newTitle, String newDescription) async {
-    final currentState = state.value;
-    if (currentState == null) return;
-
-    final todoToEdit = currentState.firstWhere((todo) => todo.id == id);
+    final todoToEdit = _todoState.allTodos.firstWhere((todo) => todo.id == id);
     final updatedTodo = todoToEdit.copyWith(
       title: newTitle,
       description: newDescription,
@@ -72,13 +81,37 @@ class TodoList extends _$TodoList {
 
     await _todoService.updateTodo(updatedTodo);
 
-    state = AsyncValue.data(currentState
-        .map((todo) => todo.id == id ? updatedTodo : todo)
-        .toList());
+    _todoState = TodoState(
+      uncompletedTodos: _todoState.uncompletedTodos
+          .map((todo) => todo.id == id ? updatedTodo : todo)
+          .toList(),
+      completedTodos: _todoState.completedTodos
+          .map((todo) => todo.id == id ? updatedTodo : todo)
+          .toList(),
+    );
+    state = AsyncValue.data(_todoState.allTodos);
   }
 
   Future<void> toggleTodo(TodoModel todo) async {
-    final updatedToggle = todo.copyWith(isChecked: !todo.isChecked);
-    await updateTodo(updatedToggle);
+    final updatedTodo = todo.copyWith(isChecked: !todo.isChecked);
+    await _todoService.updateTodo(updatedTodo);
+
+    if (updatedTodo.isChecked) {
+      _todoState = TodoState(
+        uncompletedTodos:
+            _todoState.uncompletedTodos.where((t) => t.id != todo.id).toList(),
+        completedTodos: [..._todoState.completedTodos, updatedTodo],
+      );
+    } else {
+      _todoState = TodoState(
+        uncompletedTodos: [..._todoState.uncompletedTodos, updatedTodo],
+        completedTodos:
+            _todoState.completedTodos.where((t) => t.id != todo.id).toList(),
+      );
+    }
+    state = AsyncValue.data(_todoState.allTodos);
   }
+
+  List<TodoModel> get uncompletedTodos => _todoState.uncompletedTodos;
+  List<TodoModel> get completedTodos => _todoState.completedTodos;
 }

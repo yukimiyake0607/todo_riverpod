@@ -1,0 +1,8 @@
+{
+    "dart.flutterSdkPath": ".fvm/versions/stable",
+    "cSpell.words": [
+        "fixnum",
+        "rxdart",
+        "sprintf"
+    ]
+}

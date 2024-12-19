@@ -81,6 +81,6 @@ class UncompletedTodoScreen extends ConsumerWidget {
           error: (error, stack) => Center(
                 child: Text('Error: $error'),
               ),
-          loading: () => Center(child: CircularProgressIndicator()));
+          loading: () => const Center(child: CircularProgressIndicator()));
   }
 }
