@@ -4,6 +4,7 @@
         "dorny",
         "fixnum",
         "rxdart",
-        "sprintf"
+        "sprintf",
+        "subosito"
     ]
 }
